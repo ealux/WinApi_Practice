@@ -14,6 +14,8 @@ namespace WinApi.pInvoke
         [DllImport(FileName, SetLastError = true)]
         public static extern int EnumWindows(EnumWindowProc hWnd, IntPtr lParam);
 
+        #region [Text]
+
         #region [Getters]
 
         /// <summary>
@@ -48,5 +50,25 @@ namespace WinApi.pInvoke
         public static extern bool SetWindowText(IntPtr hWnd, string lpString);
 
         #endregion [Setters]
+
+        #endregion
+
+
+        #region [Geometry]
+
+        [DllImport(FileName, SetLastError = true)]
+        public static extern bool GetWindowRect(IntPtr hWnd, ref RECT lpRect);
+
+        [DllImport(FileName, SetLastError = true)]
+        public static extern bool MovieWindow(IntPtr hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
+
+        #endregion [Geometry]
+
+
+        #region [Messages]
+
+
+
+        #endregion [Messages]
     }
 }
