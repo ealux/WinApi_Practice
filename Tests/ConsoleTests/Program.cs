@@ -14,11 +14,18 @@ namespace ConsoleTests
             Console.ReadLine();
 
             // Enumerate windows
-            var notepad = Window.FindWindows(w => w.Text.EndsWith("Блокнот"));
+            var notepad = Window.FindWindows(w => w.Text.EndsWith("pad++"));
+            foreach (var item in notepad)
+                item.Text = "asdasdasda";
+
 
             // Take text
             var window = new Window(notepad_process.MainWindowHandle);
             Console.WriteLine("Text: {0}", window.Text);
+
+            // Set text
+            window.Text = Console.ReadLine();
+            Console.WriteLine("Text now: {0}", window.Text);
 
             Console.WriteLine("End.");
             Console.ReadLine();

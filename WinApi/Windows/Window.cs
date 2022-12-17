@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 using WinApi.pInvoke;
 
@@ -15,8 +16,9 @@ namespace WinApi.Windows
         {
             get => GetWindowText();
             set
-            {
-                throw new NotImplementedException();
+            {                
+                if (!SetWindowText(value))
+                    Marshal.ThrowExceptionForHR(Marshal.GetHRForLastWin32Error()); // Throw if error
             }
         }
 
@@ -53,5 +55,8 @@ namespace WinApi.Windows
 
             return result.ToArray();
         }
+
+        /// <summary> Set window text (title) </summary>
+        private bool SetWindowText(string text) => User32.SetWindowText(Handle, text);
     }
 }

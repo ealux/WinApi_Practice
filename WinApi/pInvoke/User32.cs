@@ -9,6 +9,14 @@ namespace WinApi.pInvoke
         public const string FileName = "user32.dll";
 
         /// <summary>
+        /// Enumerate system windows
+        /// </summary>
+        [DllImport(FileName, SetLastError = true)]
+        public static extern int EnumWindows(EnumWindowProc hWnd, IntPtr lParam);
+
+        #region [Getters]
+
+        /// <summary>
         /// Get Window Text (title)
         /// </summary>
         /// <param name="hWnd">Window descriptor</param>
@@ -26,10 +34,19 @@ namespace WinApi.pInvoke
         [DllImport(FileName, CharSet = CharSet.Auto, SetLastError = true)]
         public static extern int GetWindowTextLength(IntPtr hWnd);
 
+        #endregion [Getters]
+
+        #region [Setters]
+
         /// <summary>
-        /// Enumerate system windows
+        /// Set Window text
         /// </summary>
+        /// <param name="hWnd">Window descriptor</param>
+        /// <param name="lpString">Text</param>
+        /// <returns>True if text replaced</returns>
         [DllImport(FileName, SetLastError = true)]
-        public static extern int EnumWindows(EnumWindowProc hWnd, IntPtr lParam);
+        public static extern bool SetWindowText(IntPtr hWnd, string lpString);
+
+        #endregion [Setters]
     }
 }
