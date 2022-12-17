@@ -8,9 +8,7 @@ namespace WinApi.pInvoke
     {
         public const string FileName = "user32.dll";
 
-        /// <summary>
-        /// Enumerate system windows
-        /// </summary>
+        /// <summary> Enumerate system windows </summary>
         [DllImport(FileName, SetLastError = true)]
         public static extern int EnumWindows(EnumWindowProc hWnd, IntPtr lParam);
 
@@ -51,8 +49,7 @@ namespace WinApi.pInvoke
 
         #endregion [Setters]
 
-        #endregion
-
+        #endregion [Text]
 
         #region [Geometry]
 
@@ -63,7 +60,6 @@ namespace WinApi.pInvoke
         public static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
 
         #endregion [Geometry]
-
 
         #region [Messages]
 
@@ -77,6 +73,19 @@ namespace WinApi.pInvoke
         [DllImport(FileName, CharSet = CharSet.Auto, SetLastError = true)]
         public static extern IntPtr SendMessage(IntPtr hWnd, WM Msg, IntPtr wParam, IntPtr lParam);
 
+        /// <summary>
+        /// Async SendMessage
+        /// </summary>
+        [DllImport(FileName, CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern IntPtr PostMessage(IntPtr hWnd, WM Msg, IntPtr wParam, IntPtr lParam);
+
         #endregion [Messages]
+
+        #region [Behavior]
+
+        [DllImport(FileName, SetLastError = true)]
+        public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, SetWindowPosFlags uFlags);
+
+        #endregion [Behavior]
     }
 }

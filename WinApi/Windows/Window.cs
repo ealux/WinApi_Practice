@@ -98,14 +98,58 @@ namespace WinApi.Windows
 
         #region [Behavior]
 
-        public static IntPtr SendMessage(IntPtr Handle, WM Message, IntPtr wParam, IntPtr lParam) =>
+        public IntPtr SendMessage(IntPtr Handle, WM Message, IntPtr wParam, IntPtr lParam) =>
             User32.SendMessage(Handle, Message, wParam, lParam);
 
         public IntPtr SendMessage(WM Message) => SendMessage(Handle, Message, IntPtr.Zero, IntPtr.Zero);
 
+        public IntPtr PostMessage(WM Message, IntPtr wParam, IntPtr lParam) =>
+            User32.PostMessage(Handle, Message, wParam, lParam);
+
+        #region Close
 
         /// <summary> Close window </summary>
         public bool Close() => SendMessage(WM.CLOSE) == IntPtr.Zero;
+
+        #endregion Close
+
+        #region Click
+
+        public void Click()
+        {
+            PostMessage(WM.LBUTTONDOWN, IntPtr.Zero, IntPtr.Zero);
+            PostMessage(WM.LBUTTONUP, IntPtr.Zero, IntPtr.Zero);
+        }
+
+        public void Click(Point point)
+        {
+            var pPoint = GCHandle.Alloc(point);
+
+            try
+            {
+                var lParam = GCHandle.ToIntPtr(pPoint);
+                PostMessage(WM.LBUTTONDOWN, IntPtr.Zero, lParam);
+                PostMessage(WM.LBUTTONUP, IntPtr.Zero, lParam);
+            }
+            finally
+            {
+                pPoint.Free();
+            }
+        }
+
+        public void Click(int x, int y) => Click(new Point(x, y));
+
+        #endregion Click
+
+        #region Set TopMost window position
+
+        public bool SetTopMost(bool set = true) =>
+            User32.SetWindowPos(Handle, 
+                set ? InsertAfterEnumHWND.TopMost : InsertAfterEnumHWND.NoTopMost, 
+                0, 0, 0, 0,
+                SetWindowPosFlags.IgnoreMove | SetWindowPosFlags.IgnoreResize);
+
+        #endregion
 
         #endregion [Behavior]
 

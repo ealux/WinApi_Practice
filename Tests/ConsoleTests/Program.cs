@@ -24,8 +24,10 @@ namespace ConsoleTests
             //    Thread.Sleep(100);
             //}
 
-            Console.ReadLine();
-            window.Close(); 
+            //Console.ReadLine();
+            //window.Close(); 
+
+            window.SetTopMost(false);
 
             Console.WriteLine("End.");
             Console.ReadLine();
