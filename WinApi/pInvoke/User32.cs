@@ -60,14 +60,22 @@ namespace WinApi.pInvoke
         public static extern bool GetWindowRect(IntPtr hWnd, ref RECT lpRect);
 
         [DllImport(FileName, SetLastError = true)]
-        public static extern bool MovieWindow(IntPtr hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
+        public static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
 
         #endregion [Geometry]
 
 
         #region [Messages]
 
-
+        /// <summary>
+        /// Send message to the window
+        /// </summary>
+        /// <param name="hWnd">Descriptor</param>
+        /// <param name="Msg">Message</param>
+        /// <param name="wParam">Major parameter</param>
+        /// <param name="lParam">Minor parameter</param>
+        [DllImport(FileName, CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern IntPtr SendMessage(IntPtr hWnd, WM Msg, IntPtr wParam, IntPtr lParam);
 
         #endregion [Messages]
     }

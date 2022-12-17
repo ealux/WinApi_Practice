@@ -77,7 +77,7 @@ namespace WinApi.Windows
             }
             set
             {
-                if(!User32.MovieWindow(Handle, value.Left, value.Top, value.Width, value.Height, true))
+                if (!User32.MoveWindow(Handle, value.Left, value.Top, value.Width, value.Height, true))
                     ThrowLastWin32Error();
             }
         }
@@ -94,7 +94,20 @@ namespace WinApi.Windows
 
         public int Height { get => Rectangle.Height; set => Size = new Size(Width, value); }
 
-        #endregion
+        #endregion [Geometry]
+
+        #region [Behavior]
+
+        public static IntPtr SendMessage(IntPtr Handle, WM Message, IntPtr wParam, IntPtr lParam) =>
+            User32.SendMessage(Handle, Message, wParam, lParam);
+
+        public IntPtr SendMessage(WM Message) => SendMessage(Handle, Message, IntPtr.Zero, IntPtr.Zero);
+
+
+        /// <summary> Close window </summary>
+        public bool Close() => SendMessage(WM.CLOSE) == IntPtr.Zero;
+
+        #endregion [Behavior]
 
         #region [Error]
 
